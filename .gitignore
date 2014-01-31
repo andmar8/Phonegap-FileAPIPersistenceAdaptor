@@ -1,2 +1,4 @@
 /platforms/android/bin
-/platforms/android/res
+/platforms/android/assets
+/platforms/android/bin
+/platforms/android/gen
