@@ -1,4 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget>
     <access origin="*" />
+    <feature name="File">
+        <param name="wp-package" value="File" />
+    </feature>
 </widget>
