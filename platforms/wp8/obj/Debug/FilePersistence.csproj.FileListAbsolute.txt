@@ -1,0 +1,14 @@
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\Bin\Debug\ApplicationIcon.png
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\Bin\Debug\Background.png
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\Bin\Debug\com.filepersistence.dll
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\Bin\Debug\com.filepersistence.pdb
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\Bin\Debug\AppManifest.xaml
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\Bin\Debug\Properties\WMAppManifest.xml
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\Bin\Debug\CordovaAppProj_Debug_AnyCPU.xap
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\obj\Debug\App.g.cs
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\obj\Debug\cordovalib\CordovaView.g.cs
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\obj\Debug\MainPage.g.cs
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\obj\Debug\com.filepersistence.g.resources
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\obj\Debug\com.filepersistence.dll
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\obj\Debug\com.filepersistence.pdb
+C:\Users\Andrew\Documents\pgapps\Phonegap-FileAPIPersistenceAdaptor\platforms\wp8\obj\Debug\XapCacheFile.xml
