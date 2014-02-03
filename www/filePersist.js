@@ -9,6 +9,9 @@
  * - Allow passing in of fail (and success?) callbacks
  * - Handle setting up the fileSystem externally and pass it in?
  * - Double check the create file + write/read in one call, wasn't working last time I tried it
+ * 
+ * - WARNING: There's a gotcha in WP8, which appears to auto marshall strings to objects, android and ios don't, still investigating
+ *
  */
 var filePersist = {
     /*
