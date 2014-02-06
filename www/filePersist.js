@@ -50,7 +50,9 @@ var filePersist = {
     getObjectInFile: function(file){
         var reader = new FileReader();
         reader.onloadend = function(evt) {
-            var obj = JSON.parse(evt.target.result);
+            var _tmp = evt.target.result; /* scope reduction... maybe unnecessary? */
+            var obj = try{JSON.parse(_tmp);}catch(e){} /** android/ios **/
+            if(obj==null){obj=_tmp;} /** try again for wp8 **/
             /*console.log(obj);*/
             return obj; /* or callback?... */
         };
