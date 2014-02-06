@@ -11,7 +11,8 @@
  * - Double check the create file + write/read in one call, wasn't working last time I tried it
  * 
  * - WARNING: There's a gotcha in WP8, which appears to auto marshall strings to objects, android and ios don't, still investigating
- *
+ * - 	Fix.... Parse the json first (android/ios) in a try catch THEN check for null on the result, if null, re assign raw result (wp8),
+ * 		if it's still null the data is bad/empty anyway!
  */
 var filePersist = {
     /*
