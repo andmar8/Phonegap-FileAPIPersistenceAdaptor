@@ -1,79 +1,65 @@
 /*
- * Scratching out some ideas...
- * 
- * - Is it possible to cache the js file reference and reuse?
- * - Avoiding // comments as they don't like minifiers
- * - Should get/set be separate prototype functions?
- *   - It possibly should, as then you could use a merge in different files to replace get/set with text only in wp8 instead of text/binary in android/ios
- * - For some reason wp8 can load JSON from a string without parsing (IE thing?), android/ios doesn't play nicely in the same vein though :-/
- * - Allow passing in of fail (and success?) callbacks
- * - Handle setting up the fileSystem externally and pass it in?
- * - Double check the create file + write/read in one call, wasn't working last time I tried it
- * 
- * - WARNING: There's a gotcha in WP8, which appears to auto marshall strings to objects, android and ios don't, still investigating
- * - 	Fix.... Parse the json first (android/ios) in a try catch THEN check for null on the result, if null, re assign raw result (wp8),
- * 		if it's still null the data is bad/empty anyway!
- */
-var filePersist = {
-    /*
-     * Reference to the file system
-     */
-    fileSystem: null,
+Library function that abstracts the phonegap/cordova FileApi. 
+Allowing calls such as:
+    filer = new FilePersist();
+    filer.set(object,fileName);
+    filer.get(fileName,successCallback(result)); //result being the contents of the fileName file
     
-    /*
-     * Allow "how" persistent modifer?....
-     * 
-     * @param boolean persistent
-     */
-    initialize: function(/*persistent*/){
-        /*if(persistent){*/
-            window.requestFileSystem(LocalFileSystem.PERSISTENT,0,function(fs){
-                this.fileSystem = fs;
-            });
-        /*}else{*/
-            /*
-             * window.requestFileSystem(...)
-             */
-        /*}*/
-    },
-    failRead: function(e){
-      console.log("Error whilst reading: "+e);
-    },
-    failWrite: function(e){
-      console.log("Error whilst writing: "+e);
-    },
-    get: function(filePath,fileName/*,objectName ? */){
-        this.fileSystem.root.getFile("test.js",/*{create: true, exclusive: true}*/null,function(fileEntry){
-            fileEntry.file(this.getObjectInFile,this.failRead);
-        },this.failRead);
-    },
-    getObjectInFile: function(file){
-        var reader = new FileReader();
-        reader.onloadend = function(evt) {
-            var _tmp = evt.target.result; /* scope reduction... maybe unnecessary? */
-            var obj = try{JSON.parse(_tmp);}catch(e){} /** android/ios **/
-            if(obj==null){obj=_tmp;} /** try again for wp8 **/
-            /*console.log(obj);*/
-            return obj; /* or callback?... */
-        };
-        reader.readAsText(file);
-    },
-    set: function(filePath,fileName,objectToPersist){
-        /* create file if it doesn't exist, just in case */
-        this.fileSystem.root.getFile("test.js",{create: true, exclusive: true},function(){
-            created("test.js");
-        },this.failWrite);
-        /* write object to file */
-        this.fileSystem.root.getFile("test.js",/*{create: true, exclusive: true}*/null,function(fileEntry){
-            fileEntry.createWriter(function(writer){
-                this.setObjectInFile(writer,objectToPersist);
-            },this.failWrite);
-        },this.failWrite);
-    },
-    setObjectInFile: function(writer,objectToPersist){
-        var objAsString = JSON.stringify(objectToPersist);
-        /*console.log(objAsString);*/
-        /*writer.onwriteend = function(evt){console.log("obj written");};*/
-        writer.write(objAsString);
+Also supports creation of directories in root and the creation of empty files.
+*/
+
+function FilePersist() {
+	var fileSystem;
+    
+	/* Retrieve local fileSystem and store in variable */
+    window.requestFileSystem(LocalFileSystem.PERSISTENT,0,function(fs){fileSystem = fs;},onError);
+	
+	/* Error function for the creation of fileSystem object */
+	var onError = function(e) {
+		console.log(e);
     }
-};
+    
+    /* create directory function that creates folder in root directory */
+    this.createDirectory = function(directoryName,success,error) {
+		fileSystem.root.getDirectory(directoryName,{create : true},success,error);
+	}
+	
+	/* create file function that creates folder in root directory */
+	this.createFile = function(fileName,success,error) {
+		fileSystem.root.getFile(fileName, {create : true},success,error);
+	}
+	
+	/* get function that takes a fileName and returns the contents of the file to the success callback */
+	this.get = function(fileName,success,error) {
+        
+        fileSystem.root.getFile(fileName, {create: true, exclusive: false}, function(fe){
+                                fe.file(function(file){
+                                        var reader = new FileReader();
+                                        
+                                        reader.onloadend = function(evt){
+											
+											try{ var obj = JSON.parse(evt.target.result);}catch(e){}
+											
+											if(obj==null){ obj=evt.target.result;}
+											
+											success(obj);
+                                        }
+                                        
+                                        reader.readAsText(file);
+                                        
+                                        });
+                                
+                                },error);
+        
+    }
+    
+	/* get function that takes an object and a fileName and stores the object in the file */
+	this.set = function(obj,fileName,success,error) {
+        fileSystem.root.getFile(fileName, {create: true, exclusive: false}, function(fe){
+                                fe.createWriter(function(writer){writer.write(JSON.stringify(obj));},error);
+                                return true;
+                                },error);
+    }   
+	
+	
+}
