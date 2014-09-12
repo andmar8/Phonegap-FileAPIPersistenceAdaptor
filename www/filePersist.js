@@ -122,6 +122,9 @@ FilePersist.prototype.getFileContents = function(directoryEntry,fileName,success
  *		},fail,"ExampleDirectory",JSONFiles.options.createIfDoesNotExist);
  *	},fail);
  *
+ * NOTE: A lot of the time when using this function you are probably more concerned as to if it "errored" than succeeded the error,success params
+ * are the reverse order of other functions.
+ *
  */
 FilePersist.prototype.setFileContents = function(directoryEntry,fileName,objToSave,error,success,options){
     directoryEntry.getFile(fileName,(options?options:null),function(fileEntry){
