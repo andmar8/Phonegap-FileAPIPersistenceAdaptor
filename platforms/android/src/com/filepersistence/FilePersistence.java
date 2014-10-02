@@ -22,7 +22,7 @@ package com.filepersistence;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-public class FilePersistence extends DroidGap
+public class FilePersistence extends CordovaActivity
 {
     @Override
     public void onCreate(Bundle savedInstanceState)

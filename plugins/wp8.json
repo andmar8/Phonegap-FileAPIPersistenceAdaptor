@@ -1,1 +1,26 @@
-{"prepare_queue":{"installed":[],"uninstalled":[]},"config_munge":{"config.xml":{"/*":{"<feature name=\"File\"><param name=\"wp-package\" value=\"File\" /></feature>":1}}},"installed_plugins":{"org.apache.cordova.file":{"PACKAGE_NAME":"{70471700-ABB2-465C-ABA6-A8F8D4DF7ADE}"}},"dependent_plugins":{}}
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"File\"><param name=\"wp-package\" value=\"File\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "{7EA2D16A-4CAD-4DCD-9CB6-B0A085D96979}"
+        }
+    },
+    "dependent_plugins": {}
+}

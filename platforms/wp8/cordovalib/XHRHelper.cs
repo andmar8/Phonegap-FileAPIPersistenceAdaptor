@@ -16,7 +16,7 @@ namespace WPCordovaClassLib.CordovaLib
         public WebBrowser Browser { get; set; }
         public PhoneApplicationPage Page { get; set; }
 
-        public void InjectScript() 
+        public void InjectScript()
         {
 
 
@@ -30,7 +30,7 @@ namespace WPCordovaClassLib.CordovaLib
     if (!docDomain || docDomain.length === 0) {
 
         var aliasXHR = win.XMLHttpRequest;
-        
+
         var XHRShim = function() {};
         win.XMLHttpRequest = XHRShim;
         XHRShim.noConflict = aliasXHR;
@@ -48,7 +48,7 @@ namespace WPCordovaClassLib.CordovaLib
             withCredentials: false,
             _requestHeaders: null,
             open: function (reqType, uri, isAsync, user, password) {
-                
+
                 if (uri && uri.indexOf('http') === 0) {
                     if (!this.wrappedXHR) {
                         this.wrappedXHR = new aliasXHR();
@@ -95,6 +95,16 @@ namespace WPCordovaClassLib.CordovaLib
                                 return this.wrappedXHR.responseXML;
                             }
                         });
+                        Object.defineProperty(this, 'response', {
+                            get: function() {
+                                return this.wrappedXHR.response;
+                            }
+                        });
+                        Object.defineProperty(this, 'responseType', {
+                            set: function(val) {
+                                return this.wrappedXHR.responseType = val;
+                            }
+                        });
                         this.getResponseHeader = function(header) {
                             return this.wrappedXHR.getResponseHeader(header);
                         };
@@ -111,15 +121,35 @@ namespace WPCordovaClassLib.CordovaLib
                 {
                     this.isAsync = isAsync;
                     this.reqType = reqType;
-                    var newUrl = uri;
-                    this._url = newUrl;
+                    this._url = uri;
                 }
             },
             statusText: '',
             changeReadyState: function(newState) {
                 this.readyState = newState;
                 if (this.onreadystatechange) {
-                    this.onreadystatechange();
+                    // mimic simple 'readystatechange' event which should be passed as per spec
+                    var evt = {type: 'readystatechange', target: this, timeStamp: new Date().getTime()};
+                    this.onreadystatechange(evt);
+                }
+                if (this.readyState == XHRShim.DONE){
+                    this.onload && this.onload();
+                }
+            },
+            addEventListener: function (type, listener, useCapture){
+                if (this.wrappedXHR) {
+                    this.wrappedXHR.addEventListener(type, listener, useCapture);
+                } else {
+                    this['on' + type] = listener;
+                }
+            },
+            removeEventListener: function (type, listener, useCapture){
+                if (this.wrappedXHR) {
+                    this.wrappedXHR.removeEventListener(type, listener, useCapture);
+                } else {
+                    if (this['on' + type] == listener) { // if listener is currently used
+                        delete this['on' + type];
+                    }
                 }
             },
             setRequestHeader: function(header, value) {
@@ -132,6 +162,9 @@ namespace WPCordovaClassLib.CordovaLib
             },
             getAllResponseHeaders: function() {
                 return this.wrappedXHR ? this.wrappedXHR.getAllResponseHeaders() : '';
+            },
+            overrideMimeType: function(mimetype) {
+                return this.wrappedXHR ? this.wrappedXHR.overrideMimeType(mimetype) : '';
             },
             responseText: '',
             responseXML: '',
@@ -156,26 +189,57 @@ namespace WPCordovaClassLib.CordovaLib
             send: function(data) {
                 if (this.wrappedXHR) {
                     return this.wrappedXHR.send(data);
-                } 
+                }
                 else {
                     this.changeReadyState(XHRShim.OPENED);
                     var alias = this;
+
+                    var root = window.location.href.split('#')[0];   // remove hash
+                    var basePath = root.substr(0,root.lastIndexOf('/')) + '/';
+
+                    //console.log( 'Stripping protocol if present and removing leading / characters' );
+                    var resolvedUrl =
+                            // remove protocol from the beginning of the url if present
+                            ( this._url.indexOf( window.location.protocol ) === 0 ?
+                                this._url.substring( window.location.protocol.length ) :
+                                this._url )
+                            // get rid of all the starting slashes
+                            .replace(/^[/]*/, '')
+                            .split('#')[0]; // remove hash
+
+                    var wwwFolderPath = navigator.userAgent.indexOf('MSIE 9.0') > -1 ? 'app/www/' : 'www/';
+
+                    // handle special case where url is of form app/www but we are loaded just from /www
+                    if( resolvedUrl.indexOf('app/www') == 0 ) {
+                        resolvedUrl = window.location.protocol  + wwwFolderPath + resolvedUrl.substr(7);
+                    }
+                    else if( resolvedUrl.indexOf('www') == 0) {
+                        resolvedUrl = window.location.protocol  + wwwFolderPath + resolvedUrl.substr(4);
+                    }
+
+                    if(resolvedUrl.indexOf(':') < 0) {
+                        resolvedUrl = basePath + resolvedUrl; // consider it relative
+                    }
+
                     var funk = function () {
                         window.__onXHRLocalCallback = function (responseCode, responseText) {
                             alias.status = responseCode;
                             if (responseCode == '200') {
                                 alias.responseText = responseText;
+                                Object.defineProperty(alias, 'responseXML', {
+                                    get: function () {
+                                        return new DOMParser().parseFromString(this.responseText, 'text/xml');
+                                    }
+                                });
                             }
                             else {
                                 alias.onerror && alias.onerror(responseCode);
                             }
 
                             alias.changeReadyState(XHRShim.DONE);
-                            alias.onload && alias.onload();
-                            
                         }
                         alias.changeReadyState(XHRShim.LOADING);
-                        window.external.Notify('XHRLOCAL/' + alias._url); 
+                        window.external.Notify('XHRLOCAL/' + resolvedUrl);
                     }
                     if (this.isAsync) {
                         setTimeout(funk, 0);
@@ -184,16 +248,6 @@ namespace WPCordovaClassLib.CordovaLib
                         funk();
                     }
                 }
-            },
-            getContentLocation: function() {
-                if (window.contentLocation === undefined) {
-                    window.contentLocation = navigator.userAgent.toUpperCase().indexOf('MSIE 10') > -1 ? this.contentLocation.RESOURCES : this.contentLocation.ISOLATED_STORAGE;
-                }
-                return window.contentLocation;
-            },
-            contentLocation: {
-                ISOLATED_STORAGE: 0,
-                RESOURCES: 1
             },
             status: 404
         };
@@ -204,7 +258,7 @@ namespace WPCordovaClassLib.CordovaLib
             Browser.InvokeScript("execScript", new string[] { script });
         }
 
-        public bool HandleCommand(string commandStr) 
+        public bool HandleCommand(string commandStr)
         {
             if (commandStr.IndexOf("XHRLOCAL") == 0)
             {
@@ -222,20 +276,20 @@ namespace WPCordovaClassLib.CordovaLib
                             Browser.InvokeScript("__onXHRLocalCallback", new string[] { "200", text });
                             return true;
                         }
-                    }       
+                    }
                 }
 
-                Uri relUri = new Uri(uri.AbsolutePath,UriKind.Relative);
-                
+                Uri relUri = new Uri(uri.AbsolutePath, UriKind.Relative);
+
                 var resource = Application.GetResourceStream(relUri);
 
                 if (resource == null)
                 {
-                    // 404 ? 
+                    // 404 ?
                     Browser.InvokeScript("__onXHRLocalCallback", new string[] { "404" });
                     return true;
                 }
-                else 
+                else
                 {
                     using (StreamReader streamReader = new StreamReader(resource.Stream))
                     {

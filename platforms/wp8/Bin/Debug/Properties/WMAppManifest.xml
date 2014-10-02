@@ -4,10 +4,11 @@
   <Languages xmlns="">
     <Language code="en-US" />
   </Languages>
-  <App Author="FilePersistence author" BitsPerPixel="32" Description="Apache Cordova for Windows Phone" Genre="apps.normal" ProductID="{70471700-ABB2-465C-ABA6-A8F8D4DF7ADE}" Publisher="FilePersistence" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="FilePersistence" Version="1.0.0" xmlns="">
+  <App Author="FilePersistence author" BitsPerPixel="32" Description="Apache Cordova for Windows Phone" Genre="apps.normal" ProductID="{7EA2D16A-4CAD-4DCD-9CB6-B0A085D96979}" Publisher="FilePersistence" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="FilePersistence" Version="1.0.0" xmlns="">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
+      <Capability Name="ID_CAP_NETWORKING" />
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />

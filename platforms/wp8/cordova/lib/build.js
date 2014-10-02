@@ -20,6 +20,10 @@
 
 var fso = WScript.CreateObject('Scripting.FileSystemObject');
 var wscript_shell = WScript.CreateObject("WScript.Shell");
+var procEnv = wscript_shell.Environment("Process");
+// possible values and additional details: http://msdn.microsoft.com/en-us/library/aa384274.aspx
+var procArchitecture = procEnv("PROCESSOR_ARCHITECTURE").toLowerCase();
+var is64Mode = procArchitecture && procArchitecture != 'x86';
 
 var args = WScript.Arguments;
 
@@ -66,9 +70,17 @@ function exec_verbose(command) {
     //Check to make sure our scripts did not encounter an error
     if (!oShell.StdErr.AtEndOfStream) {
         var line = oShell.StdErr.ReadAll();
+        Log("ERROR: command failed in build.js : " + command);
         Log(line, true);
         WScript.Quit(2);
     }
+
+    return oShell.ExitCode;
+}
+
+// escapes a path so that it can be passed to shell command. 
+function escapePath(path) {
+    return '"' + path + '"';
 }
 
 // checks to see if a .csproj file exists in the project root
@@ -78,7 +90,7 @@ function is_cordova_project(path) {
         var proj_files = new Enumerator(proj_folder.Files);
         for (;!proj_files.atEnd(); proj_files.moveNext()) {
             if (fso.GetExtensionName(proj_files.item()) == 'csproj') {
-                return true;  
+                return true;
             }
         }
     }
@@ -98,15 +110,51 @@ function get_solution_name(path) {
     return null;
 }
 
+// returns full path to msbuild tools required to build the project
+function getMSBuildToolsPath() {
+    // WP8 requires x86 version of MSBuild, CB-6732
+    var regRoot = is64Mode ? 'HKLM\\SOFTWARE\\Wow6432Node' : 'HKLM\\SOFTWARE';
+
+    // use the latest version of the msbuild tools available on this machine
+    var toolsVersions = ['12.0','4.0'];          // for WP8 we REQUIRE 4.0 !!!
+    for (idx in toolsVersions) {
+        try {
+            return wscript_shell.RegRead(regRoot + '\\Microsoft\\MSBuild\\ToolsVersions\\' + toolsVersions[idx] + '\\MSBuildToolsPath');
+        } catch (err) {
+            Log("toolsVersion " + idx + " is not supported");
+        }
+    }
+    Log('MSBuild tools have not been found. Please install Microsoft Visual Studio 2012 or later', true);
+    WScript.Quit(2);
+}
+
 // builds the project and .xap in release mode
 function build_xap_release(path) {
+
+    exec_verbose('%comspec% /c "' + path + '\\cordova\\clean"');
+
     Log("Building Cordova-WP8 Project:");
     Log("\tConfiguration : Release");
     Log("\tDirectory : " + path);
-    
+
     wscript_shell.CurrentDirectory = path;
-    exec_verbose('msbuild ' + get_solution_name(path) + ' /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo /p:Configuration=Release');
     
+    var MSBuildToolsPath = getMSBuildToolsPath();
+    Log("\tMSBuildToolsPath: " + MSBuildToolsPath);
+
+    var buildCommand = escapePath(MSBuildToolsPath + 'msbuild') + ' ' + escapePath(get_solution_name(path)) +
+            ' /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo /p:Configuration=Release';
+        
+    // hack to get rid of 'Access is denied.' error when running the shell w/ access to C:\path..
+    buildCommand = 'cmd /c "' + buildCommand + '"';
+        
+    Log("buildCommand = " + buildCommand);
+
+    if (exec_verbose(buildCommand) != 0) {
+        // msbuild failed
+        WScript.Quit(2);
+    }
+
     // check if file xap was created
     if (fso.FolderExists(path + '\\Bin\\Release')) {
         var out_folder = fso.GetFolder(path + '\\Bin\\Release');
@@ -114,7 +162,7 @@ function build_xap_release(path) {
         for (;!out_files.atEnd(); out_files.moveNext()) {
             if (fso.GetExtensionName(out_files.item()) == 'xap') {
                 Log("BUILD SUCCESS.");
-                return;  
+                return;
             }
         }
     }
@@ -124,13 +172,31 @@ function build_xap_release(path) {
 
 // builds the project and .xap in debug mode
 function build_xap_debug(path) {
+
+    exec_verbose('%comspec% /c "' + path + '\\cordova\\clean"');
+
     Log("Building Cordova-WP8 Project:");
     Log("\tConfiguration : Debug");
     Log("\tDirectory : " + path);
-    
+
     wscript_shell.CurrentDirectory = path;
-    exec_verbose('msbuild ' + get_solution_name(path) + ' /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo /p:Configuration=Debug');
-    
+
+    var MSBuildToolsPath = getMSBuildToolsPath();
+    Log("\tMSBuildToolsPath: " + MSBuildToolsPath);
+
+    var buildCommand = escapePath(MSBuildToolsPath + 'msbuild') + ' ' + escapePath(get_solution_name(path)) +
+            ' /clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal /nologo /p:Configuration=Debug';
+
+    // hack to get rid of 'Access is denied.' error when running the shell w/ access to C:\path..
+    buildCommand = '%comspec% /c "' + buildCommand + '"';
+
+    Log("buildCommand = " + buildCommand);
+
+    if (exec_verbose(buildCommand) != 0) {
+        // msbuild failed
+        WScript.Quit(2);
+    }
+
     // check if file xap was created
     if (fso.FolderExists(path + '\\Bin\\Debug')) {
         var out_folder = fso.GetFolder(path + '\\Bin\\Debug');
@@ -138,7 +204,7 @@ function build_xap_debug(path) {
         for (;!out_files.atEnd(); out_files.moveNext()) {
             if (fso.GetExtensionName(out_files.item()) == 'xap') {
                 Log("BUILD SUCCESS.");
-                return;  
+                return;
             }
         }
     }
@@ -169,11 +235,9 @@ if (args.Count() > 0) {
         }
 
         if (args(0) == "--debug" || args(0) == "-d") {
-            exec_verbose('%comspec% /c ' + ROOT + '\\cordova\\clean');
             build_xap_debug(ROOT);
         }
         else if (args(0) == "--release" || args(0) == "-r") {
-            exec_verbose('%comspec% /c ' + ROOT + '\\cordova\\clean');
             build_xap_release(ROOT);
         }
         else {

@@ -144,7 +144,6 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="config.xml" />
-        <Content Include="www\cordova.js" />
         <Content Include="Images\appbar.back.rest.png" />
         <Content Include="Images\appbar.close.rest.png" />
         <Content Include="Images\appbar.feature.video.rest.png" />
@@ -200,7 +199,7 @@
         </PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
-        <Content Include="www\cordova.js" />
+        <Compile Include="Plugins\org.apache.cordova.file\File.cs" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\config.xml" />
@@ -209,172 +208,19 @@
         <Content Include="www\cordova.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\css\index.css" />
+        <Content Include="www\cordova_plugins.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\icon.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\img\logo.png" />
+        <Content Include="www\filePersist.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\index.html" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\js\index.js" />
+        <Content Include="www\index.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\res\icon\android\icon-36-ldpi.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\android\icon-48-mdpi.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\android\icon-72-hdpi.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\android\icon-96-xhdpi.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\bada\icon-128.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\bada-wac\icon-48-type5.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\bada-wac\icon-50-type3.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\bada-wac\icon-80-type4.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\blackberry\icon-80.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\ios\icon-57-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\ios\icon-57.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\ios\icon-72-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\ios\icon-72.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\tizen\icon-128.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\webos\icon-64.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\windows-phone\icon-173-tile.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\windows-phone\icon-48.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\windows-phone\icon-62-tile.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-hdpi-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-hdpi-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-ldpi-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-ldpi-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-mdpi-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-mdpi-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-xhdpi-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-xhdpi-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\bada\screen-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\bada-wac\screen-type3.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\bada-wac\screen-type4.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\bada-wac\screen-type5.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\blackberry\screen-225.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-ipad-landscape-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-ipad-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-ipad-portrait-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-ipad-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-iphone-landscape-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-iphone-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-iphone-portrait-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-iphone-portrait-568h-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-iphone-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\tizen\README.md" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\webos\screen-64.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\windows-phone\screen-portrait.jpg" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\helper.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\index.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\lib\jasmine-1.2.0\jasmine-html.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\lib\jasmine-1.2.0\jasmine.css" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\lib\jasmine-1.2.0\jasmine.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\lib\jasmine-1.2.0\MIT.LICENSE" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec.html" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.file\File.cs" />
+        <Content Include="www\phonegap.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryEntry.js" />
@@ -399,6 +245,9 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\FileSystem.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\fileSystems.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\FileUploadOptions.js" />
@@ -429,8 +278,5 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\wp\FileUploadOptions.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\cordova_plugins.js" />
     </ItemGroup>
 </Project>
