@@ -2,7 +2,10 @@ document.addEventListener('deviceready',function(){
     /* USEFUL STUFF:
      * https://developer.mozilla.org/en-US/docs/Web/API/FileError#Error_codes
      */
-    var fail = function(e){console.log("oh dear, something went wrong :(");};
+    var fail = function(e){
+        navigator.notification.alert("oh dear, something went wrong :(",function(){},"File Persistance","OK");
+        console.log("oh dear, something went wrong :(");
+    };
     var filePersist = new FilePersist();
     var myExampleDirName = "exampleDir";
     var myExampleFileName = "exampleFile";
@@ -16,6 +19,7 @@ document.addEventListener('deviceready',function(){
                 "array": ["test","test2"]
             };
             var success = function(){
+                navigator.notification.alert("Object successfully saved to fileSystem",function(){},"File Persistance","OK");
                 console.log("Object successfully saved to fileSystem");
                 filePersist.getFileContents(myExampleDir,myExampleFileName,function(obj){
                     console.log("What is in "+myExampleDir.nativeURL+myExampleFileName);
