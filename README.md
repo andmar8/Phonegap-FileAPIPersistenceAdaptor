@@ -1,6 +1,13 @@
 Phonegap-FileAPIPersistenceAdaptor
 ==================================
 
-A place to play with making a standardised and simple interface to get/set js objects using the phonegap/cordova file API
+This is a really basic project that demonstrates writing to a file then reading from it using a simplified API (read filePersist.js).
 
-For the time being I'll try to get this working then look at a plugin/lawnchair route....
+This was built using:
+
+phonegap 3.5.0 (cordova 3.5.0-0.2.7) (NOTE: 3.5.1 on android)
+org.apache.cordova.console 0.2.11
+org.apache.cordova.dialogs 0.2.10
+org.apache.cordova.file 1.3.1
+
+If I get time, I will look at a plugin/lawnchair route....
