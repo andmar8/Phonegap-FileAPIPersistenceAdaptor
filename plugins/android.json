@@ -34,6 +34,9 @@
     "installed_plugins": {
         "org.apache.cordova.file": {
             "PACKAGE_NAME": "com.filepersistence"
+        },
+        "org.apache.cordova.console": {
+            "PACKAGE_NAME": "com.filepersistence"
         }
     },
     "dependent_plugins": {}
