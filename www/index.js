@@ -22,6 +22,7 @@ document.addEventListener('deviceready',function(){
                 navigator.notification.alert("Object successfully saved to fileSystem",function(){},"File Persistance","OK");
                 console.log("Object successfully saved to fileSystem");
                 filePersist.getFileContents(myExampleDir,myExampleFileName,function(obj){
+                    navigator.notification.alert("The console log is now displaying what we just saved...",function(){},"File Persistance","OK");
                     console.log("What is in "+myExampleDir.nativeURL+myExampleFileName);
                     console.log(obj);
                 },fail,filePersist.options.createIfDoesNotExist);
