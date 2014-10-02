@@ -4,6 +4,12 @@
     <feature name="File">
         <param name="wp-package" value="File" />
     </feature>
+    <feature name="Console">
+        <param name="wp-package" value="DebugConsole" />
+    </feature>
+    <feature name="Notification">
+        <param name="wp-package" value="Notification" />
+    </feature>
     <name>FilePersistence</name>
     <description>
         Hello World sample application that responds to the deviceready event.
@@ -53,10 +59,4 @@
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
     <access origin="http://127.0.0.1*" />
     <content src="index.html" />
-    <feature name="Console">
-        <param name="wp-package" value="DebugConsole" />
-    </feature>
-    <feature name="Notification">
-        <param name="wp-package" value="Notification" />
-    </feature>
 </widget>

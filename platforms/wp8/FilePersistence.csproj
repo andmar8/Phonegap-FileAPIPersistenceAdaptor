@@ -206,10 +206,28 @@
         <Compile Include="Plugins\org.apache.cordova.file\File.cs" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.console\DebugConsole.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.dialogs\Notification.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.dialogs\NotificationBox.xaml.cs">
+            <DependentUpon>NotificationBox.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup />
+    <ItemGroup>
+        <Content Include="Plugins\org.apache.cordova.dialogs\notification-beep.wav" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\config.xml" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\cordova.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\cordova_plugins.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\filePersist.js" />
@@ -224,19 +242,13 @@
         <Content Include="www\phonegap.js" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.console\DebugConsole.cs" />
+        <Content Include="www\plugins\org.apache.cordova.console\www\console-via-logger.js" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.dialogs\Notification.cs" />
+        <Content Include="www\plugins\org.apache.cordova.console\www\logger.js" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.dialogs\NotificationBox.xaml.cs">
-            <DependentUpon>NotificationBox.xaml</DependentUpon>
-        </Compile>
-    </ItemGroup>
-    <ItemGroup />
-    <ItemGroup>
-        <Content Include="Plugins\org.apache.cordova.dialogs\notification-beep.wav" />
+        <Content Include="www\plugins\org.apache.cordova.dialogs\www\notification.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryEntry.js" />
@@ -263,6 +275,9 @@
         <Content Include="www\plugins\org.apache.cordova.file\www\FileSystem.js" />
     </ItemGroup>
     <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\fileSystems.js" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\FileUploadOptions.js" />
     </ItemGroup>
     <ItemGroup>
@@ -284,9 +299,6 @@
         <Content Include="www\plugins\org.apache.cordova.file\www\ProgressEvent.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\fileSystems.js" />
-    </ItemGroup>
-    <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\requestFileSystem.js" />
     </ItemGroup>
     <ItemGroup>
@@ -294,17 +306,5 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\wp\FileUploadOptions.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.console\www\console-via-logger.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.console\www\logger.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.dialogs\www\notification.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\cordova_plugins.js" />
     </ItemGroup>
 </Project>
