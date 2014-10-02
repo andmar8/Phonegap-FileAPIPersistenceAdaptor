@@ -9,7 +9,6 @@ document.addEventListener('deviceready',function(){
     var filePersist = new FilePersist();
     var myExampleDirName = "exampleDir";
     var myExampleFileName = "exampleFile";
-    
     filePersist.getDir(cordova.file.dataDirectory,function(dataDir){
         filePersist.getDir(dataDir,function(myExampleDir){
             var objToSave = {
