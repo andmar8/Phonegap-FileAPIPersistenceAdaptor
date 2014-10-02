@@ -4,3 +4,5 @@
 /platforms/android/gen
 /platforms/android/ant-build
 /platforms/android/ant-gen
+/platforms/wp8/Bin
+/platforms/wp8/obj

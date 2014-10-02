@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.filepersistence" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <access origin="*" />
+    <feature name="File">
+        <param name="wp-package" value="File" />
+    </feature>
     <name>FilePersistence</name>
     <description>
         Hello World sample application that responds to the deviceready event.
@@ -50,7 +53,4 @@
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
     <access origin="http://127.0.0.1*" />
     <content src="index.html" />
-    <feature name="File">
-        <param name="wp-package" value="File" />
-    </feature>
 </widget>
