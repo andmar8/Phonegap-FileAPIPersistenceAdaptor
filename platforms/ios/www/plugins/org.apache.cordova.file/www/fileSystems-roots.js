@@ -1,4 +1,4 @@
-cordova.define("org.apache.cordova.file.Metadata", function(require, exports, module) { /*
+cordova.define("org.apache.cordova.file.fileSystems-roots", function(require, exports, module) { /*
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -19,24 +19,28 @@ cordova.define("org.apache.cordova.file.Metadata", function(require, exports, mo
  *
 */
 
-/**
- * Information about the state of the file or directory
- *
- * {Date} modificationTime (readonly)
- */
-var Metadata = function(metadata) {
-    if (typeof metadata == "object") {
-        this.modificationTime = new Date(metadata.modificationTime);
-        this.size = metadata.size || 0;
-    } else if (typeof metadata == "undefined") {
-        this.modificationTime = null;
-        this.size = 0;
+// Map of fsName -> FileSystem.
+var fsMap = null;
+var FileSystem = require('./FileSystem');
+var exec = require('cordova/exec');
+
+// Overridden by Android, BlackBerry 10 and iOS to populate fsMap.
+require('./fileSystems').getFs = function(name, callback) {
+    if (fsMap) {
+        callback(fsMap[name]);
     } else {
-        /* Backwards compatiblity with platforms that only return a timestamp */
-        this.modificationTime = new Date(metadata);
+        exec(success, null, "File", "requestAllFileSystems", []);
+        function success(response) {
+            fsMap = {};
+            for (var i = 0; i < response.length; ++i) {
+                var fsRoot = response[i];
+                var fs = new FileSystem(fsRoot.filesystemName, fsRoot);
+                fsMap[fs.name] = fs;
+            }
+            callback(fsMap[name]);
+        }
     }
 };
 
-module.exports = Metadata;
 
 });
