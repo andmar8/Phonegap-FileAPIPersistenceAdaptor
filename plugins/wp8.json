@@ -15,6 +15,10 @@
                         {
                             "xml": "<feature name=\"Console\"><param name=\"wp-package\" value=\"DebugConsole\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"wp-package\" value=\"Notification\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -26,6 +30,9 @@
             "PACKAGE_NAME": "{7EA2D16A-4CAD-4DCD-9CB6-B0A085D96979}"
         },
         "org.apache.cordova.console": {
+            "PACKAGE_NAME": "{7EA2D16A-4CAD-4DCD-9CB6-B0A085D96979}"
+        },
+        "org.apache.cordova.dialogs": {
             "PACKAGE_NAME": "{7EA2D16A-4CAD-4DCD-9CB6-B0A085D96979}"
         }
     },

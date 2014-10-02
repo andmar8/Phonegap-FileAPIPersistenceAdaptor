@@ -48,6 +48,8 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
 		CC29342C679C463DA8979D5C /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E875D905FEC94CC2A2D765E1 /* CDVLogger.m */; };
+		A393D77B35CD4421A6C8D2F2 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = EA9701C3533044C4B3E939E7 /* CDVNotification.m */; };
+		74C61DFA7C1A437084C7C22E /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0B71B2A714A94D1AB4531FB9 /* CDVNotification.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,9 @@
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = FilePersistence/config.xml; sourceTree = "<group>"; };
 		E875D905FEC94CC2A2D765E1 /* CDVLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLogger.m"; path = "org.apache.cordova.console/CDVLogger.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		BD0445CD41334BD0B0E117A5 /* CDVLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLogger.h"; path = "org.apache.cordova.console/CDVLogger.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		EA9701C3533044C4B3E939E7 /* CDVNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVNotification.m"; path = "org.apache.cordova.dialogs/CDVNotification.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		D984B690CBF04822A05C2380 /* CDVNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVNotification.h"; path = "org.apache.cordova.dialogs/CDVNotification.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		0B71B2A714A94D1AB4531FB9 /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "CDVNotification.bundle"; path = "CDVNotification.bundle"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +230,7 @@
 				308D052D1370CCF300D202BF /* icons */,
 				308D05311370CCF300D202BF /* splash */,
 				8D1107310486CEB800E47090 /* FilePersistence-Info.plist */,
+				0B71B2A714A94D1AB4531FB9 /* CDVNotification.bundle */,
 			);
 			name = Resources;
 			path = FilePersistence/Resources;
@@ -274,6 +280,8 @@
 				5CD68B0D299847ABBC463835 /* CDVAssetLibraryFilesystem.h */,
 				E875D905FEC94CC2A2D765E1 /* CDVLogger.m */,
 				BD0445CD41334BD0B0E117A5 /* CDVLogger.h */,
+				EA9701C3533044C4B3E939E7 /* CDVNotification.m */,
+				D984B690CBF04822A05C2380 /* CDVNotification.h */,
 			);
 			name = Plugins;
 			path = FilePersistence/Plugins;
@@ -411,6 +419,7 @@
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
+				74C61DFA7C1A437084C7C22E /* CDVNotification.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +454,7 @@
 				919123E936C2433F83175B35 /* CDVLocalFilesystem.m in Sources */,
 				17B18408BE6C46709C94DE62 /* CDVAssetLibraryFilesystem.m in Sources */,
 				CC29342C679C463DA8979D5C /* CDVLogger.m in Sources */,
+				A393D77B35CD4421A6C8D2F2 /* CDVNotification.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
