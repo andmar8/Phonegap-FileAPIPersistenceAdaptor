@@ -18,7 +18,7 @@ document.addEventListener('deviceready',function(){
             var success = function(){
                 console.log("Object successfully saved to fileSystem");
                 filePersist.getFileContents(myExampleDir,myExampleFileName,function(obj){
-                    console.log("What is in "+myExampleDir.nativeURL+"exampleFile?");
+                    console.log("What is in "+myExampleDir.nativeURL+myExampleFileName);
                     console.log(obj);
                 },fail,filePersist.options.createIfDoesNotExist);
             };
